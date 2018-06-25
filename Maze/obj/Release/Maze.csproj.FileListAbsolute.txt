@@ -1,0 +1,8 @@
+D:\Maze\WindowsFormsApplication35\bin\Release\WindowsFormsApplication35.exe.config
+D:\Maze\WindowsFormsApplication35\obj\Release\WindowsFormsApplication35.exe
+D:\Maze\WindowsFormsApplication35\obj\Release\WindowsFormsApplication35.pdb
+D:\Maze\WindowsFormsApplication35\bin\Release\WindowsFormsApplication35.exe
+D:\Maze\WindowsFormsApplication35\bin\Release\WindowsFormsApplication35.pdb
+D:\Maze\WindowsFormsApplication35\obj\Release\WindowsFormsApplication35.Form1.resources
+D:\Maze\WindowsFormsApplication35\obj\Release\WindowsFormsApplication35.Properties.Resources.resources
+D:\Maze\WindowsFormsApplication35\obj\Release\Maze.csproj.GenerateResource.Cache
