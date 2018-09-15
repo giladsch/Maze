@@ -1,0 +1,101 @@
+import { Component, OnInit } from '@angular/core';
+import * as go from "gojs";
+
+@Component({
+  selector: 'app-gojs',
+  templateUrl: './gojs.component.html',
+  styleUrls: ['./gojs.component.less']
+})
+export class GojsComponent implements OnInit {
+
+  myDiagram: go.Diagram;
+  key: number = -1;
+
+  constructor() { }
+
+  ngOnInit() {
+    let $ = go.GraphObject.make;
+    this.myDiagram = new go.Diagram("myDiagramDiv");
+    this.myDiagram.doubleClick = (e) => {
+      let newemp = {
+        key: this.key,
+        name: "Munkustrap123" + Math.random(),
+        source: "cat7.png"
+      };
+      this.key--;
+      this.myDiagram.model.addNodeData(newemp);
+    }
+
+
+
+    this.myDiagram.addDiagramListener("ObjectDoubleClicked", (ev) => {
+      let clicked = ev.subject.part;
+      if (clicked !== null) {
+        let thisemp = clicked.data;
+        this.myDiagram.startTransaction("add employee");
+        let newemp = { key: 7, name: "(new person)", title: "", parent: thisemp.key };
+        this.myDiagram.model.addNodeData(newemp);
+        this.myDiagram.commitTransaction("add employee");
+      }
+    });
+
+    this.myDiagram.addDiagramListener("ObjectDoubleClicked", (ev) => {
+      let clicked = ev.subject.part;
+      if (clicked !== null) {
+        let thisemp = clicked.data;
+        this.myDiagram.startTransaction("add employee");
+        let newemp = { key: 7, name: "(new person)", title: "", parent: thisemp.key };
+        this.myDiagram.model.addNodeData(newemp);
+        this.myDiagram.commitTransaction("add employee");
+      }
+    });
+    // specify a Diagram.layout that arranges trees
+    this.myDiagram.layout = $(go.TreeLayout,
+      {
+        treeStyle: go.TreeLayout.StyleLastParents,
+        arrangement: go.TreeLayout.ArrangementHorizontal,
+        // properties for most of the tree:
+        angle: 90,
+        layerSpacing: 35,
+        // properties for the "last parents":
+        alternateAngle: 90,
+        alternateLayerSpacing: 35,
+        alternateAlignment: go.TreeLayout.AlignmentBus,
+        alternateNodeSpacing: 20,
+      });
+
+
+    this.myDiagram.linkTemplate =
+      $(go.Link,
+        { routing: go.Link.Orthogonal, corner: 5 },
+        $(go.Shape, { strokeWidth: 3, stroke: "#555" })); // the link shape
+
+    // the template we defined earlier
+    this.myDiagram.nodeTemplate =
+      $(go.Node, "Horizontal",
+        // { doubleClick: this.nodeDoubleClick },
+        { background: "#44CCFF" },
+        $(go.Picture,
+          { margin: 10, width: 50, height: 50, background: "red" },
+          new go.Binding("source")),
+        $(go.TextBlock, "Default Text",
+          { margin: 12, stroke: "white", font: "bold 16px sans-serif" },
+          new go.Binding("text", "name"))
+      );
+
+    let nodeDataArray =
+      [ // the "key" and "parent" property names are required,
+        // but you can add whatever data properties you need for your app
+        { key: "1", name: "Don Meow", source: "cat1.png" },
+        { key: "2", parent: "1", name: "Demeter", source: "cat2.png" },
+        { key: "3", parent: "1", name: "Copricat", source: "cat3.png" },
+        { key: "4", parent: "3", name: "Jellylorum", source: "cat4.png" },
+        { key: "5", parent: "3", name: "Alonzo", source: "cat5.png" },
+        { key: "6", parent: "2", name: "Munkustrap", source: "cat6.png" }
+      ];
+
+    this.myDiagram.model = new go.TreeModel(nodeDataArray);
+    this.myDiagram.model.undoManager.isEnabled = true;
+  }
+
+}
